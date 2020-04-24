@@ -9,7 +9,6 @@ import api from '../../services/api';
 import Header from '../../components/Header';
 
 import formatValue from '../../utils/formatValue';
-import formatDate from '../../utils/formatDate';
 
 import { Container, CardContainer, Card, TableContainer } from './styles';
 
@@ -53,11 +52,9 @@ const Dashboard: React.FC = () => {
         balance: balanceData,
       } = response.data;
 
-      console.log('transactionsData: ', transactionsData);
-
       const formattedTransactions = transactionsData.map((transaction: Transaction) => ({
         ...transaction,
-        formattedValue: formatValue(transaction.value),
+        formattedValue: `${ transaction.type === 'outcome' ? '-' : ''} ${ formatValue(transaction.value) }`,
         formattedDate: format(new Date(Date.parse(transaction.created_at.toString())), 'dd/MM/yyyy')
       }))
 
